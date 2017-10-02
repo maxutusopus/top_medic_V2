@@ -1,0 +1,65 @@
+{
+    "settings": {
+        "index": {
+            "refresh_interval": "1s",
+            "number_of_shards": "5",
+			"number_of_replicas": "0",
+            "analysis": {
+                "filter": {
+                    "autocomplete_filter": {
+                        "type": "edge_ngram",
+                        "min_gram": "1",
+                        "max_gram": "50"
+                    }
+                },
+                "analyzer": {
+                    "autocomplete": {
+                        "filter": [
+                            "lowercase"
+                            ,
+                            "german_normalization"
+                            ,
+                            "autocomplete_filter"
+                        ],
+                        "type": "custom",
+                        "tokenizer": "whitespace"
+                    }
+                }
+            }
+            
+            }
+    },
+    "mappings": {
+        "doctors": {
+            "properties": {
+                "input": {
+                    "analyzer": "autocomplete",
+                    "type": "string"
+                },
+                "behandler_art_id": {
+                    "type": "integer"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            }
+        },
+        "my_type": {
+            "_all": {
+                "enabled": false
+            },
+            "properties": {
+                "input": {
+                    "analyzer": "autocomplete",
+                    "type": "string"
+                },
+                "behandler_art_id": {
+                    "type": "integer"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
