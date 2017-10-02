@@ -43,23 +43,6 @@
                     "type": "integer"
                 }
             }
-        },
-        "my_type": {
-            "_all": {
-                "enabled": false
-            },
-            "properties": {
-                "input": {
-                    "analyzer": "autocomplete",
-                    "type": "string"
-                },
-                "behandler_art_id": {
-                    "type": "integer"
-                },
-                "weight": {
-                    "type": "integer"
-                }
-            }
         }
     }
 }
