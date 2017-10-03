@@ -3,6 +3,40 @@
       
     "function_score": {
        
+        "filter": { "terms": { "behandler_art_id": ["%BEHANDLER_ART_ID%"] } },
+      "query": {
+        "match": {
+           "input":{ 
+                "query":  "%QUERY_SUGGEST%"
+                ,"operator":"and"
+//                ,"fuzziness": 1
+               
+           }
+        }
+    },
+    "functions":[
+        {
+            "field_value_factor": { 
+            "field": "weight"}  
+        }
+        ,{
+            "field_value_factor": { 
+            "field": "input.length",
+            "modifier": "reciprocal"
+            }  
+        }
+        ],
+        "boost_mode":"replace"
+     
+    }
+  }
+}
+
+{ 
+  "query": {
+      
+    "function_score": {
+       
         "filter": { "terms": { "behandler_art_id": [1,2,3,4,5,6,8,7,9,10,11,12,13,14,15,16,17,22,23] } },
       "query": {
         "match": {
