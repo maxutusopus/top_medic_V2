@@ -1,0 +1,51 @@
+{"size": 30,
+   "from":0,
+      "query": {
+          "function_score":{
+              "query":{
+           		 "multi_match": {
+		             "query":"%QUERY_SEARCH%",
+        		     "fields":["vname","nname","plz","ort^10","fach"],
+             		 "type":"cross_fields",
+             		 "fuzziness":1
+           		   , "operator":"and"
+         						 }
+      				},
+      			"filter" : {
+                "terms" : {"behandler_art_id":["%BEHANDLER_ART_ID%"]}
+            },
+              "functions":[
+             {
+             	"gauss":{
+                	"location":{
+                    	"origin":{
+                            "lat":"%LAT%", 
+                            "lon":"%LON%"},
+                            "offset":"0km",
+                            "scale":"2km",
+                            "decay" : 0.5
+                    }
+                }
+                ,"weight":2
+             }
+             
+            ],
+            
+                    
+            "boost_mode":"sum"       
+            ,"score_mode":"multiply"
+            }
+            
+          }
+          ,"fields":["_source"]
+          , "script_fields":{
+ 		       "distance":	  {
+        		"params":		{
+            	  "lat":"%LAT%" ,
+                  "lon":"%LON%"
+        					    },
+        		  "script":"doc['location']?doc['location'].distanceInKm(lat,lon): 0"
+          		     	      }
+                            }
+          
+      }

@@ -1,0 +1,30 @@
+{
+         "ndx_suggest":{
+           "text":"%QUERY_SUGGEST%",
+           "completion":{
+				"field":"suggest",
+				"fuzzy":{
+					"fuzziness":0,
+					"traspositions":true,
+					"min_length":2,
+					"prefix_length":2},
+					"context": {"behandler_art_id":["%BEHANDLER_ART_ID%"]}
+            }
+         }
+}
+
+{
+         "suggest":{
+           "text":"hamburg",
+           "completion":{
+             "field":"suggest",
+             "fuzzy":{
+              "fuzziness":0
+             ,"traspositions":false
+             ,"min_length":2
+             ,"prefix_length":2
+              },
+              "context": {"behandler_art_id":["3"]}
+             }
+         }
+} 
