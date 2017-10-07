@@ -46,3 +46,62 @@
         }
     }
 }
+######################PRODUCTION VERSION ##########################
+{
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 0
+        },
+        "analysis": {
+            "filter": {
+                "autocomplete_filter": {
+                    "type":     "edge_ngram",
+                    "min_gram": 1,
+                    "max_gram": 50
+                }
+            },
+            "analyzer": {
+                "autocomplete": {
+                    "type":      "custom",
+                    "tokenizer": "keyword",
+                    "filter": [
+                        "lowercase",
+                        "german_normalization",
+                        "autocomplete_filter"
+                    ]
+                },
+                "search":{
+                    "type":"custom",
+                    "tokenizer":"keyword",
+                    "filter":[
+                        "lowercase",
+                        "german_normalization"
+                        ]
+                }
+            }
+        }
+    },
+    "mappings":{
+        "doctors": {
+            "_all": {
+                 "enabled": false
+                     },
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "analyzer": "autocomplete",
+                    "search_analyzer":"search",
+                    "fields":{
+                        "length":{
+                            "type":"token_count",
+                            "analyzer":"standard"
+                        }
+                    }
+                        },
+                "weight":{"type":"integer"},
+                "behandler_art_id": {"type": "string"}
+        }
+    }
+}
+} 
